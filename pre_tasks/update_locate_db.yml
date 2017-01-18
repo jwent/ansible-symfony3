@@ -1,0 +1,3 @@
+---
+- name: Update 'locate' database
+  shell: updatedb

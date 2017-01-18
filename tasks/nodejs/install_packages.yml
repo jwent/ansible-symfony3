@@ -1,0 +1,15 @@
+---
+# Command duplicate is a workaround for npm "Maximum call stack size exceeded" error
+- name: Installing npm packages
+  shell: npm install --no-bin-links --loglevel error || npm install --no-bin-links --loglevel error
+  become: no
+  args:
+    chdir: /vagrant
+
+# Gulp fails without rebuilding node-sass
+# with "no such file or directory, scandir '/vagrant/node_modules/node-sass/vendor'" error
+- name: Rebuilding node-sass
+  shell: npm rebuild node-sass
+  become: no
+  args:
+    chdir: /vagrant

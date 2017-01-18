@@ -1,0 +1,21 @@
+---
+  mysql_host: "%"
+  mysql_db_name: "database"
+  mysql_db_user_name: "user"
+  mysql_db_user_pass: "{{ lookup('password', 'credentials/mysql/password/user  chars=ascii_letters,digits length=46') }}"
+  mysql_db_root_pass: "{{ lookup('password', 'credentials/mysql/password/root  chars=ascii_letters,digits length=46') }}"
+  mysql_packages:
+    - mysql-server # (metapackage depending on the latest version)
+  mysql_root_password: "{{ mysql_db_root_pass }}"
+  mysql_root_password_update: yes
+  mysql_enabled_on_startup: yes
+  overwrite_global_mycnf: yes
+  mysql_databases:
+    - name: "{{ mysql_db_name }}"
+      encoding: latin1
+      collation: latin1_swedish_ci
+  mysql_users:
+    - name: "{{ mysql_db_user_name }}"
+      host: "{{ mysql_host }}"
+      password: "{{ mysql_db_user_pass }}"
+      priv: "{{ mysql_db_name }}.*:ALL"

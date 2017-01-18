@@ -1,0 +1,52 @@
+---
+- name: Copy custom php-fpm pool configs
+  template:
+    src: "{{ sf_param_dist_file }}"
+    dest: "{{ sf_param_file }}"
+    owner: ubuntu
+    group: ubuntu
+    mode: 0664
+    force: yes
+
+- name: Remove comments from parameters.yml
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '[ ]*\#[^\n]*\n'
+    replace: ''
+
+- name: Remove double new lines from parameters.yml
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '\n\n'
+    replace: '\n'
+
+- name: Replace database name
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '((database_name:\s*)[^\s\n]*)\n'
+    replace: '\2{{ mysql_db_name }}\n'
+
+- name: Replace database user
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '((database_user:\s*)[^\s\n]*)\n'
+    replace: '\2{{ mysql_db_user_name }}\n'
+
+- name: Replace database password
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '((database_password:\s*)[^\s\n]*)\n'
+    replace: '\2{{ mysql_db_user_pass }}\n'
+
+- name: Replace symfony secret
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '((secret:\s*)[^\s\n]*)\n'
+    replace: '\2{{ lookup("password", "/tmp/passwordfile chars=ascii_letters length=32") }}\n'
+
+- name: Replace custom params
+  replace:
+    dest: "{{ sf_param_file }}"
+    regexp: '(({{ item.name }}:\s* )[^\s\n]*)\n*'
+    replace: '\2 {{ item.value }}\n'
+  with_items: "{{ sf_params }}"

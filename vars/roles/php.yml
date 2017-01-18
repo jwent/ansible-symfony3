@@ -1,0 +1,36 @@
+---
+env:
+ RUNLEVEL: 1
+php_version: "7.1"
+php_enable_webserver: true
+php_webserver_daemon: "apache2"
+php_enable_php_fpm: false
+
+php_conf_paths:
+  - /etc/php/7.1/cli
+  - /etc/php/7.1/apache2
+
+php_extension_conf_paths:
+  - /etc/php/7.1/cli/conf.d
+  - /etc/php/7.1/apache2/conf.d
+
+php_packages:
+    - "libapache2-mod-php{{ php_version }}"
+    - "libpcre3-dev"
+    - "php-apcu"
+    - "php-date"
+    - "php{{ php_version }}-common"
+    - "php{{ php_version }}-cli"
+    - "php{{ php_version }}-dev"
+    - "php{{ php_version }}-fpm"
+    - "php{{ php_version }}-bcmath"
+    - "php{{ php_version }}-gd"
+    - "php{{ php_version }}-intl"
+    - "php{{ php_version }}-curl"
+    - "php{{ php_version }}-json"
+    - "php{{ php_version }}-opcache"
+    - "php{{ php_version }}-xml"
+    - "php{{ php_version }}-mbstring"
+    - "php{{ php_version }}-mcrypt"
+    - "php{{ php_version }}-mysql"
+    - "php{{ php_version }}-zip"

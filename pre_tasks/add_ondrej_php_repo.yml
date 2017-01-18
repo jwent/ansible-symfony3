@@ -1,0 +1,4 @@
+---
+- name: Add repository for new versions of PHP (7.*)
+  apt_repository: repo='ppa:ondrej/php'
+  when: ansible_distribution == 'Ubuntu'

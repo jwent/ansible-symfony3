@@ -1,0 +1,18 @@
+---
+- name: Getting list of commands
+  shell: "php /vagrant/bin/console list"
+  register: commands_list
+
+- name: Setting fact of FOSUserBundle presence.
+  set_fact:
+    fos_user_bundle_is_present: '"fos:user" in commands_list'
+
+- name: Creating priveleged users
+  shell: "php bin/console fos:user:create {{ item.name }} {{ item.email }} {{ lookup('password', 'credentials/control_panel/' + item.name + ' chars=ascii_letters,digits') }} --super-admin"
+  with_items: "{{ sf_priveleged_users }}"
+  when:
+    - fos_user_bundle_is_present == true
+    - sf_priveleged_users is defined
+    - sf_priveleged_users|length>0
+  args:
+    chdir: /vagrant

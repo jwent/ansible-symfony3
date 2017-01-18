@@ -1,0 +1,19 @@
+---
+sf_conf_dir: "/vagrant/app/config"
+sf_cache_dir: "/vagrant/var/cache"
+sf_cache_env:
+  - dev
+  - prod
+  - test
+  - de~
+  - pro~
+  - tes~
+
+sf_param_file: "{{ sf_conf_dir }}/parameters.yml"
+sf_param_dist_file: "{{ sf_conf_dir }}/parameters.yml.dist"
+
+sf_params: []
+
+sf_priveleged_users:
+  - name: admin
+    email: admin@admin.com

@@ -1,0 +1,13 @@
+---
+- set_fact:
+    update_schema_cmd: 'php bin/console doctrine:schema:update'
+  when: force_schema_update is not defined and force_schema_update == false
+
+- set_fact:
+    update_schema_cmd: 'php bin/console doctrine:schema:update --force'
+  when: force_schema_update is defined and force_schema_update == true
+
+- name: Executing schema update
+  shell: "{{ update_schema_cmd }}"
+  args:
+    chdir: /vagrant

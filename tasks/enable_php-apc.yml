@@ -1,0 +1,17 @@
+---
+- name: Add php-apc to CLI php.ini
+  lineinfile:
+    dest: "{{ item }}/php.ini"
+    line: '[apc]'
+  with_items: "{{ php_conf_paths }}"
+
+- lineinfile:
+    dest: "{{ item }}/php.ini"
+    line: 'apc.enabled=1'
+  with_items: "{{ php_conf_paths }}"
+
+- lineinfile:
+    dest: "{{ item }}/php.ini"
+    line: 'apc.enable_cli=1'
+  with_items: "{{ php_conf_paths }}"
+  notify: restart apache

@@ -1,0 +1,7 @@
+---
+php_xdebug_idekey: IDE.KEY
+php_xdebug_remote_autostart: "true"
+php_xdebug_remote_enable: "true"
+php_xdebug_remote_host: 192.168.33.1
+php_xdebug_module_path: /usr/lib/php/20151012
+php_xdebug_remote_log: ""

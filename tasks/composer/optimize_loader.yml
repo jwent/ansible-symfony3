@@ -1,0 +1,5 @@
+---
+- name: Optimizing composer autoloader
+  shell: composer dump-autoload --optimize  > /dev/null
+  args:
+    chdir: /vagrant

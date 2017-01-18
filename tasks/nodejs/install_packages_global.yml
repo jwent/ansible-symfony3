@@ -1,0 +1,7 @@
+---
+- name: Install global node.js packages
+  npm:
+    name: "{{ item }}"
+    state: present
+    global: yes
+  with_items: "{{ nodejs_deps_global }}"

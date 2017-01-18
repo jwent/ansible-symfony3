@@ -1,0 +1,7 @@
+---
+- name: Clearing symfony cache
+  file:
+    path: "{{ sf_cache_dir }}/{{ item }}"
+    state: absent
+  with_items:
+    - "{{ sf_cache_env }}"

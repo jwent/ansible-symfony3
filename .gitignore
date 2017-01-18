@@ -1,0 +1,6 @@
+/roles/*
+!/roles/.gitkeep
+/credentials/*
+!/credentials/.gitkeep
+playbook.retry
+inventory.yml

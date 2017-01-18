@@ -1,0 +1,6 @@
+---
+- name: Installing composer deps
+  shell: composer install
+  become: no
+  args:
+    chdir: /vagrant

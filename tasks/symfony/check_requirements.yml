@@ -1,0 +1,8 @@
+---
+- name: Checking symfony requirements
+  shell: php /vagrant/bin/symfony_requirements
+  register: symfony_check_result
+
+- name: Fail if symfony requirements are not fulfilled
+  fail: msg="Symfony requirements are not fulfilled. Run 'php /vagrant/bin/symfony_requirements'"
+  when: '"[OK]" not in symfony_check_result.stdout'

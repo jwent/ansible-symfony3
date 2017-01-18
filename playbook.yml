@@ -1,0 +1,48 @@
+---
+- name: Provisioning web server
+  hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - vars/roles/git.yml
+    - vars/roles/php.yml
+    - vars/roles/mysql.yml
+    - vars/roles/xdebug.yml
+    - vars/roles/composer.yml
+    - vars/roles/nodejs.yml
+    - vars/roles/apache.yml
+    - vars/roles/composer.yml
+    - vars/symfony.yml
+
+  pre_tasks:
+    - include: pre_tasks/update_locate_db.yml
+    - include: pre_tasks/increase_swap_size.yml
+      vars:
+        swap_size: 4096
+    - include: pre_tasks/add_ondrej_php_repo.yml
+
+  roles:
+    - { role: geerlingguy.git }
+    - { role: geerlingguy.mysql }
+    - { role: geerlingguy.apache }
+    - { role: geerlingguy.php }
+    - { role: geerlingguy.php-xdebug }
+    - { role: geerlingguy.composer }
+    - { role: geerlingguy.nodejs }
+
+  tasks:
+    - include: tasks/replace_apache_user.yml
+    - include: tasks/symfony/copy_params.yml
+    - include: tasks/composer/install_deps.yml
+    - include: tasks/composer/optimize_loader.yml
+    - include: tasks/symfony/check_requirements.yml
+    - include: tasks/nodejs/install_packages_global.yml
+    - include: tasks/nodejs/install_packages.yml
+    - include: tasks/symfony/cache_clear.yml
+    - include: tasks/symfony/update_db_schema.yml
+      vars:
+        force_schema_update: true
+    - include: tasks/symfony/append_fixtures.yml
+    - include: tasks/symfony/generate_entities.yml
+    - include: tasks/symfony/create_users.yml
+    - include: tasks/enable_php-apc.yml
