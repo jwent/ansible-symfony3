@@ -2,20 +2,32 @@
 env:
  RUNLEVEL: 1
 php_version: "7.1"
+php_enable_apc: true
 php_enable_webserver: true
-php_webserver_daemon: "apache2"
-php_enable_php_fpm: false
+php_enable_php_fpm: true
+php_webserver_daemon: "nginx"
 
+# Vendor-specific configuration paths on Debian/Ubuntu make my brain asplode.
 php_conf_paths:
-  - /etc/php/7.1/cli
-  - /etc/php/7.1/apache2
+  - "/etc/php/{{ php_version }}/fpm"
+  - "/etc/php/{{ php_version }}/apache2"
+  - "/etc/php/{{ php_version }}/cli"
 
 php_extension_conf_paths:
-  - /etc/php/7.1/cli/conf.d
-  - /etc/php/7.1/apache2/conf.d
+  - "/etc/php/{{ php_version }}/fpm/conf.d"
+  - "/etc/php/{{ php_version }}/apache2/conf.d"
+  - "/etc/php/{{ php_version }}/cli/conf.d"
+
+php_apc_conf_filename: 20-apcu.ini
+php_opcache_conf_filename: 05-opcache.ini
+php_fpm_daemon: "php{{ php_version }}-fpm"
+php_fpm_conf_path: "/etc/php/{{ php_version }}/fpm"
+php_fpm_pool_conf_path: "{{ php_fpm_conf_path }}/pool.d/www.conf"
+
+php_fpm_pool_user: ubuntu
+php_fpm_pool_group: ubuntu
 
 php_packages:
-    - "libapache2-mod-php{{ php_version }}"
     - "libpcre3-dev"
     - "php-apcu"
     - "php-date"

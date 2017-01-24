@@ -10,7 +10,7 @@
     - vars/roles/xdebug.yml
     - vars/roles/composer.yml
     - vars/roles/nodejs.yml
-    - vars/roles/apache.yml
+    - vars/roles/nginx.yml
     - vars/roles/composer.yml
     - vars/symfony.yml
 
@@ -24,14 +24,13 @@
   roles:
     - { role: geerlingguy.git }
     - { role: geerlingguy.mysql }
-    - { role: geerlingguy.apache }
+    - { role: geerlingguy.nginx }
     - { role: geerlingguy.php }
     - { role: geerlingguy.php-xdebug }
     - { role: geerlingguy.composer }
     - { role: geerlingguy.nodejs }
 
   tasks:
-    - include: tasks/replace_apache_user.yml
     - include: tasks/symfony/copy_params.yml
     - include: tasks/composer/install_deps.yml
     - include: tasks/composer/optimize_loader.yml

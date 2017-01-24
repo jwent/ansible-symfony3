@@ -5,4 +5,4 @@
 - src: geerlingguy.php-xdebug
 - src: geerlingguy.composer
 - src: geerlingguy.nodejs
-- src: geerlingguy.apache
+- src: geerlingguy.nginx

@@ -14,4 +14,4 @@
     dest: "{{ item }}/php.ini"
     line: 'apc.enable_cli=1'
   with_items: "{{ php_conf_paths }}"
-  notify: restart apache
+  notify: restart webserver

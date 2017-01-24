@@ -1,8 +1,0 @@
----
-- name: Changing apache user and group to `ubuntu`
-  replace:
-    dest: "/etc/apache2/envvars"
-    regexp: 'www-data'
-    replace: 'ubuntu'
-  notify:
-    - restart apache
